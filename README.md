@@ -5,7 +5,7 @@ Claude Code skills for writing and editing Flow Digital's video scripts. Two ski
 - **[`flow-video-scripts/`](./flow-video-scripts/)** — the weekly ~5–10 minute long-form "hero" video, written per presenter. Voices live in [`flow-video-scripts/presenters/`](./flow-video-scripts/presenters/).
 - **[`flow-shortform-video-scripts/`](./flow-shortform-video-scripts/)** — the 60–90s LinkedIn/Instagram clips.
 
-**New here?** Start with [`SETUP.md`](./SETUP.md) — installing the skills, SSH access, and how the auto-update/commit workflow works. That's for Claude Code users; if you use claude.ai instead, see [`USAGE.md`](./USAGE.md) for the Projects + GitHub connector route, and how the two options compare.
+**New here?** Start with [`SETUP.md`](./SETUP.md) — installing the skills, SSH access, and how the auto-update/commit workflow works. **Claude Code is strongly recommended** over using claude.ai directly — see [`USAGE.md`](./USAGE.md) for why (short version: claude.ai can't currently push edits back to this repo, only Claude Code can).
 
 **Referenced but not yet in this repo** (ask Caitlin):
 - `video-niche-finder` — the brief `flow-video-scripts` pulls topic outlines from.
