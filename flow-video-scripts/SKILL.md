@@ -17,7 +17,7 @@ description: >-
 
 You write long-form video scripts for **Flow Digital**, an AI and automation consulting firm. Each hero video is a single ~5–10 minute talking-head piece (Vendasta's comparable format ran 8–13 min — that's a fine ceiling). One goes out roughly weekly, and **it is written from the start so that self-contained short clips can be pulled out of it** for Reels and LinkedIn/YouTube Shorts.
 
-This file is both the spec Claude follows and a reference a team member can read before filming. After drafting, **adapt the script to the presenter** using their creator skill (see *Presenter adaptation* below).
+This file is both the spec Claude follows and a reference a team member can read before filming. After drafting, **adapt the script to the presenter** using their voice file (see *Presenter adaptation* below).
 
 ## What these videos are (and aren't)
 
@@ -148,14 +148,14 @@ If no presenter is named, ask which one before finalizing. Each voice file layer
 
 ## Keeping this skill current
 
-This skill lives in a shared GitHub repo (`sahaj-flow-digital/Script-Writer-Skill`, cloned at `~/.claude/skills/Script-Writer-Skill`) so voice corrections and rule changes carry over to everyone's Claude Code the next time they open a session.
+This skill lives in the shared `Script-Writer-Skill` GitHub repo (`sahaj-flow-digital/Script-Writer-Skill`), cloned at `~/repos/Script-Writer-Skill` and symlinked into `~/.claude/skills/flow-video-scripts`, so voice corrections and rule changes carry over to everyone's Claude Code the next time they open a session. The repo also holds the sibling `flow-shortform-video-scripts` skill.
 
-**Whenever you edit `SKILL.md` or a file in `presenters/`** (a new rule, a wording correction, a pattern learned from feedback), do this before ending your response:
+**Whenever you edit this file or a file in `presenters/`** (a new rule, a wording correction, a pattern learned from feedback), do this before ending your response:
 
-1. Run `git -C ~/.claude/skills/Script-Writer-Skill diff` (or `diff --stat` for a large change) to see exactly what changed.
+1. Run `git -C ~/repos/Script-Writer-Skill diff` (or `diff --stat` for a large change) to see exactly what changed.
 2. Summarize the change in plain language — which file, and what rule/voice trait was added, removed, or reworded. Don't just say "updated the skill."
 3. Ask the user whether to commit and push it now. Do not commit or push without an explicit yes — this is a shared repo everyone else's Claude Code auto-pulls from, so an unreviewed push ships straight to their next session.
-4. If they say yes, run from `~/.claude/skills/Script-Writer-Skill`:
+4. If they say yes, run from `~/repos/Script-Writer-Skill`:
    ```
    git add -A
    git commit -m "<short description of the change>"

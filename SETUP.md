@@ -1,20 +1,23 @@
 # Setup — Script Writer Skill
 
-This repo is a Claude Code skill. Follow this once to install it; every Claude Code session afterward will auto-pull the latest version on startup.
+This repo holds two Claude Code skills as sibling folders. Claude Code only auto-discovers a skill when its `SKILL.md` sits one level under `~/.claude/skills/`, so the repo is cloned to its own location and each skill folder is **symlinked** into `~/.claude/skills/`. One `git pull` updates both skills; every Claude Code session pulls automatically on startup.
 
 ## Repo layout
 
 ```
 Script-Writer-Skill/
-  SKILL.md            the main skill — arc, principles, rules Claude always follows
-  presenters/
-    jacob.md           Jacob's voice + output format (loaded on top of SKILL.md)
-    sahaj.md            Sahaj's voice + output format (loaded on top of SKILL.md)
-  README.md            what this repo is
-  SETUP.md             this file
+  flow-video-scripts/            long-form "hero" video skill
+    SKILL.md
+    presenters/
+      jacob.md                   Jacob's voice + output format
+      sahaj.md                   Sahaj's voice + output format
+  flow-shortform-video-scripts/  60-90s LinkedIn/Instagram clip skill
+    SKILL.md
+  README.md
+  SETUP.md                       this file
 ```
 
-Add a new presenter by dropping a new file in `presenters/` (copy an existing one as a template) and referencing it from the "Presenter adaptation" section of `SKILL.md`.
+Add a new presenter by dropping a new file in `flow-video-scripts/presenters/` (copy an existing one as a template) and referencing it from that skill's "Presenter adaptation" section. Add a whole new skill by creating a new top-level folder with its own `SKILL.md`, then symlinking it in step 3 below.
 
 ## 1. Generate a dedicated SSH key for this repo
 
@@ -47,24 +50,27 @@ ssh -T github-scriptwriter
 
 You should see "Hi <your GitHub username>! You've successfully authenticated..."
 
-## 3. Clone the skill into Claude Code's skills folder
+## 3. Clone the repo and symlink each skill into place
 
-Claude Code loads any skill sitting in `~/.claude/skills/<name>/` with a `SKILL.md` at its root — no registration step needed.
+Clone it somewhere outside `~/.claude/skills` — that folder is just for what Claude Code scans, the actual repo lives in `~/repos`:
 
 ```bash
+mkdir -p ~/repos
+git clone git@github-scriptwriter:sahaj-flow-digital/Script-Writer-Skill.git ~/repos/Script-Writer-Skill
 mkdir -p ~/.claude/skills
-git clone git@github-scriptwriter:sahaj-flow-digital/Script-Writer-Skill.git ~/.claude/skills/Script-Writer-Skill
+ln -s ~/repos/Script-Writer-Skill/flow-video-scripts ~/.claude/skills/flow-video-scripts
+ln -s ~/repos/Script-Writer-Skill/flow-shortform-video-scripts ~/.claude/skills/flow-shortform-video-scripts
 ```
 
 Set your commit identity for this repo (repo-local, doesn't touch your global git config):
 
 ```bash
-cd ~/.claude/skills/Script-Writer-Skill
+cd ~/repos/Script-Writer-Skill
 git config user.email "you@flow.digital"
 git config user.name "Your Name"
 ```
 
-Restart Claude Code (or open a new session) and the skill should appear in your available skills.
+Restart Claude Code (or open a new session) and both skills should appear in your available skills.
 
 ## 4. Auto-update on every session start
 
@@ -78,7 +84,7 @@ Add a `SessionStart` hook so Claude Code pulls the latest commit every time you 
         "hooks": [
           {
             "type": "command",
-            "command": "git -C ~/.claude/skills/Script-Writer-Skill pull --ff-only >/dev/null 2>&1 || true"
+            "command": "git -C ~/repos/Script-Writer-Skill pull --ff-only >/dev/null 2>&1 || true"
           }
         ]
       }
@@ -93,7 +99,7 @@ The `|| true` means a failed pull (no network, a conflict, etc.) never blocks yo
 
 ## 5. How updates flow between people
 
-- **Nothing auto-commits or auto-pushes.** When Claude edits `SKILL.md` or a `presenters/*.md` file during a session (e.g. adjusting someone's voice based on feedback), it will show you a diff, summarize the change in plain language, and ask before committing/pushing — see "Keeping this skill current" in `SKILL.md`.
+- **Nothing auto-commits or auto-pushes.** When Claude edits a `SKILL.md` or a `presenters/*.md` file during a session (e.g. adjusting someone's voice based on feedback), it will show you a diff, summarize the change in plain language, and ask before committing/pushing — see "Keeping this skill current" at the bottom of each `SKILL.md`.
 - **Uncommitted work is never lost on session end.** Edits sit on disk regardless of git state; a commit is just a snapshot. The only thing that can go stale is your local copy relative to the repo, and step 4's `--ff-only` pull fails safe rather than overwriting anything.
 - **Once pushed, everyone picks it up automatically** — no one needs to manually `git pull`; the SessionStart hook does it the next time they open Claude Code.
 - If two people edit the same file without pushing in between, you'll hit a normal git merge conflict on `git pull` — resolve it like any other conflict (or just ask Claude to help).
