@@ -32,5 +32,5 @@ Sahaj does **not** read from a full script — reading word-for-word looks unnat
 ## Notes
 
 - Bandwidth is limited — favor scripts that are fast for him to scan and shoot.
-- As Sahaj gives feedback on drafts, capture recurring corrections back into this file so future outlines need less editing. After doing so, remind him (or whoever's in the conversation) to commit and push the change to the shared repo.
+- As Sahaj gives feedback on drafts, capture recurring corrections back into this file so future outlines need less editing. Follow the commit/push workflow in `../SKILL.md` under "Keeping this skill current" — show the diff, summarize the change, and ask before pushing.
 - Everything in `flow-video-scripts` still governs: the seven-beat arc, tool-agnostic stance, short-form pull-out markers, and no invented stats/clients/results.

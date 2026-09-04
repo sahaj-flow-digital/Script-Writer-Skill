@@ -139,16 +139,29 @@ Ground claims in what you find; still mark unverified specifics `[confirm]`.
 
 ## Presenter adaptation (required last step)
 
-After the arc is drafted, adapt the script to the named presenter's **voice** and **output format** by loading their voice file (in this same skill folder):
+After the arc is drafted, adapt the script to the named presenter's **voice** and **output format** by loading their voice file (in `presenters/`, alongside this file):
 
-- **Jacob →** `jacob.md` (word-for-word, teleprompter-ready).
-- **Sahaj →** `sahaj.md` (bullet points he riffs from).
+- **Jacob →** `presenters/jacob.md` (word-for-word, teleprompter-ready).
+- **Sahaj →** `presenters/sahaj.md` (bullet points he riffs from).
 
 If no presenter is named, ask which one before finalizing. Each voice file layers voice + format **on top of** everything above; it does not override the arc, the tool stance, or the no-fabrication rules.
 
 ## Keeping this skill current
 
-This skill is maintained in a shared GitHub repo. If you update this file or a voice file with a new rule, correction, or pattern learned from feedback, end your response by reminding whoever you're talking to to commit and push the change to the shared repo, so the update carries over for both presenters.
+This skill lives in a shared GitHub repo (`sahaj-flow-digital/Script-Writer-Skill`, cloned at `~/.claude/skills/Script-Writer-Skill`) so voice corrections and rule changes carry over to everyone's Claude Code the next time they open a session.
+
+**Whenever you edit `SKILL.md` or a file in `presenters/`** (a new rule, a wording correction, a pattern learned from feedback), do this before ending your response:
+
+1. Run `git -C ~/.claude/skills/Script-Writer-Skill diff` (or `diff --stat` for a large change) to see exactly what changed.
+2. Summarize the change in plain language — which file, and what rule/voice trait was added, removed, or reworded. Don't just say "updated the skill."
+3. Ask the user whether to commit and push it now. Do not commit or push without an explicit yes — this is a shared repo everyone else's Claude Code auto-pulls from, so an unreviewed push ships straight to their next session.
+4. If they say yes, run from `~/.claude/skills/Script-Writer-Skill`:
+   ```
+   git add -A
+   git commit -m "<short description of the change>"
+   git push
+   ```
+5. If they say no or want to keep editing, leave the change uncommitted — nothing is lost, it just stays local until they're ready.
 
 ## Output format
 
