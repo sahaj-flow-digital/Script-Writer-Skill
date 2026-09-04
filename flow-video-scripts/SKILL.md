@@ -146,6 +146,22 @@ After the arc is drafted, adapt the script to the named presenter's **voice** an
 
 If no presenter is named, ask which one before finalizing. Each voice file layers voice + format **on top of** everything above; it does not override the arc, the tool stance, or the no-fabrication rules.
 
+### New presenter onboarding
+
+If someone names a presenter with no matching file in `presenters/`, don't guess at their voice or ask them to write the file themselves — run a short interview, then draft it for them.
+
+Ask these questions (they can answer inline, one at a time is fine too):
+
+1. **Output format.** "Do you read from a full teleprompter script word-for-word, work from bullet points you riff from, or something in between?" This is the biggest fork — it decides the whole file's structure, the same way it splits Jacob's and Sahaj's files today.
+2. **Self-described voice.** "If a coworker described how you talk, what 3–5 words would they use?"
+3. **Natural angle.** "What do you naturally lean on when explaining something — a real example from a project, the technical mechanism, the business case, a client's exact words?"
+4. **Comedy and tangents.** "Are you comfortable with humor on camera? And do you tend to go off-script, or stay tight to what's written?"
+5. **A real sample (optional).** "If you've got a transcript or link to something you've said on camera or on a call, paste it — even a couple minutes helps me match your actual voice instead of guessing from adjectives. No worries if you don't have one handy, we can work without it."
+
+Don't block on #5 — plenty of people won't have anything to hand, and self-description plus a first draft they can react to works fine on its own. If they skip it, say the file is a first pass and will sharpen with real feedback on drafts.
+
+Draft `presenters/<name>.md` in the same shape as the existing files (frontmatter with `name: flow-video-scripts-<name>` and a description following the same pattern as `jacob.md`/`sahaj.md`, then Output format / Voice / Notes sections). Show it to them, let them correct anything that's off, then follow the commit/push workflow below to save it.
+
 ## Keeping this skill current
 
 This skill lives in the shared `Script-Writer-Skill` GitHub repo (`sahaj-flow-digital/Script-Writer-Skill`), cloned at `~/repos/Script-Writer-Skill` and symlinked into `~/.claude/skills/flow-video-scripts`, so voice corrections and rule changes carry over to everyone's Claude Code the next time they open a session. The repo also holds the sibling `flow-shortform-video-scripts` skill.
